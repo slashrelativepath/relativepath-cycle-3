@@ -15,13 +15,4 @@ else
     snap install multipass
   fi
 fi
-#build a multipass vm called rp-vm#check OS 
-uname
-#check if multipass is installed
-which multipass
-#check if multipass is available
-brew list 
-#installmultipass 
-brew install --cask multipass
-#build multipass vm called re-vm
 
