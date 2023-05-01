@@ -12,7 +12,8 @@ else
     if ( brew --version )
     then
       echo "brew already installed"
-    else 
+    else
+	  echo "brew not installed ... installing brew"
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     fi
     echo "using brew"
@@ -29,3 +30,6 @@ else
   fi
 fi
 
+# spinning up a ubuntu vm
+echo "launching a ubuntu vm named relativepath"
+multipass launch --name relativepath
