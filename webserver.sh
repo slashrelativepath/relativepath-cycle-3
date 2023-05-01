@@ -13,7 +13,7 @@ else
     then
       echo "brew already installed"
     else
-	  echo "brew not installed ... installing brew"
+      echo "brew not installed ... installing brew"
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     fi
     echo "using brew"
