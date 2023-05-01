@@ -6,7 +6,7 @@ if ( multipass version )
 then
   echo "multipass already installed on $(uname)"
 else
-  echo "installing multipass on $(uname)"
+  echo "checking for updates and installing multipass on $(uname)"
   if [ "$(uname)" = "Darwin" ]
   then
     if ( brew --version )
@@ -16,6 +16,11 @@ else
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     fi
     echo "using brew"
+    echo "doing a brew update"
+    brew update
+    echo "doing a brew upgrade"
+    brew upgrade
+    echo "installing multipass"
     brew install multipass
   elif [ "$(uname)" = "Linux" ]
   then
