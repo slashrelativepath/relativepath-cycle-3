@@ -29,7 +29,7 @@ else
     snap install multipass
   fi
 fi
-
+# need check to see if vm already launched
 # spinning up a ubuntu vm
 echo "launching a ubuntu vm named relativepath"
 multipass launch --name relativepath
