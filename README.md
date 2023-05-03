@@ -9,5 +9,5 @@ on a mac or linux machine run this:
 
 on windows in powershell run this: 
 
-``
+`.\webserver.ps1`
  
