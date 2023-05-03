@@ -6,3 +6,8 @@ thisrepo will build a web server.
 on a mac or linux machine run this: 
 
 `bash webserver.sh`
+
+on windows in powershell run this: 
+
+``
+ 
