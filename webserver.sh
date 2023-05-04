@@ -38,3 +38,4 @@ else
   echo "launching a ubuntu vm named relativepath"
   multipass launch --name relativepath
 fi
+multipass shell relativepath
