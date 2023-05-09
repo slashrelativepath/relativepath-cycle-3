@@ -26,7 +26,7 @@ else
   elif [ "$(uname)" = "Linux" ]
   then
     echo "using snap"
-    snap install multipass
+    sudo snap install multipass
   fi
 fi
 
