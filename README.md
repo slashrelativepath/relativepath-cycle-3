@@ -1,6 +1,6 @@
 # relativepath-cycle-3
 
-thisrepo will build a web server.
+This repo will build a web server.
 
 ## usage 
 on a mac or linux machine run this: 
@@ -11,3 +11,7 @@ on windows in powershell run this:
 
 `.\webserver.ps1`
  
+## destroy
+to destroy the vm run this:
+
+`bash destroy_webserver.sh`
