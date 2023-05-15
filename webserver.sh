@@ -32,6 +32,17 @@ fi
 # wait 15 seconds for multipass to initiate
 sleep 15
 
+# checking for relativepath ssh keys
+if [ -f "./relativepath" ]
+then
+  echo "relativepath ssh keys already exist"
+else
+  echo "relativepath ssh keys do not exist ... creating"
+  ssh-keygen -t ed25519 -f "./relativepath" -N ''
+fi
+
+# add ssh keys to cloud-init
+
 # spinning up a ubuntu vm
 if ( multipass list | grep "relativepath" )
 then 
@@ -40,4 +51,3 @@ else
   echo "launching a ubuntu vm named relativepath"
   multipass launch --name relativepath
 fi
-multipass shell relativepath
