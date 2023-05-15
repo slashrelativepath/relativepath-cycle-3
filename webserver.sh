@@ -29,6 +29,8 @@ else
     sudo snap install multipass
   fi
 fi
+# wait 15 seconds for multipass to initiate
+sleep 15
 
 # spinning up a ubuntu vm
 if ( multipass list | grep "relativepath" )
