@@ -51,3 +51,6 @@ else
   echo "launching a ubuntu vm named relativepath"
   multipass launch --name relativepath
 fi
+
+# ssh to relative path vm
+ssh -i ./relativepath ubuntu@192.168.64.4
