@@ -25,12 +25,15 @@ else
     brew install multipass
   elif [ "$(uname)" = "Linux" ]
   then
+    echo "installing snap"
+    sudo apt install snapd
     echo "using snap"
     sudo snap install multipass
   fi
+
+  # wait 15 seconds for multipass to initiate
+  sleep 15
 fi
-# wait 15 seconds for multipass to initiate
-sleep 15
 
 # checking for relativepath ssh keys
 if [ -f "./relativepath" ]
