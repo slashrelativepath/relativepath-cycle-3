@@ -55,5 +55,8 @@ else
   multipass launch --name relativepath
 fi
 
+# lookup ip address of relativepath vm
+RELATIVEPATH_IP=$( multipass info relativepath | grep IPv4 | tr -s ' ' | cut -d ' ' -f 2 )
+
 # ssh to relative path vm
-ssh -i ./relativepath ubuntu@192.168.64.4
+ssh -i ./relativepath ubuntu@$RELATIVEPATH_IP
