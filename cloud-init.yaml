@@ -1,0 +1,6 @@
+#cloud-config
+users:
+  - name: adam
+    ssh-authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOauAfXt5gKJI4uRbpH+ewEFEeyNA5FC9mKd9U+dJVKO adamsmith@Adams-MacBook-Air.local
+
