@@ -1,0 +1,5 @@
+# cloud-config
+users:
+  - name: sanlung
+    ssh-authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExiDWVqLt7CevJbSFHqYHzNd0p9AvrLdVwV8I+VAlHY sanlung@ChungMacB.local

@@ -36,15 +36,28 @@ else
 fi
 
 # checking for relativepath ssh keys
-if [ -f "./relativepath" ]
+if [ -f "./id_ed25519" ]
 then
   echo "relativepath ssh keys already exist"
 else
   echo "relativepath ssh keys do not exist ... creating"
-  ssh-keygen -t ed25519 -f "./relativepath" -N ''
+  ssh-keygen -t ed25519 -f "./id_ed25519" -N ''
 fi
 
-# add ssh keys to cloud-init
+# checking for cloud-config.yaml
+if [ -f "./cloud-config.yaml" ]
+then
+  echo "cloud-config.yaml file already exists"
+else
+  echo "cloud-config.yaml file does not exist ... creating"
+  cat <<- _EOF_ > ./cloud-config.yaml
+	# cloud-config
+	users:
+	  - name: $(whoami)
+	    ssh-authorized-keys:
+	      - $(cat ./id_ed25519.pub)
+	_EOF_
+fi
 
 # spinning up a ubuntu vm
 if ( multipass list | grep "relativepath" )
@@ -52,11 +65,11 @@ then
   echo "relativepath vm is running"
 else 
   echo "launching a ubuntu vm named relativepath"
-  multipass launch --name relativepath
+  multipass launch --name relativepath --cloud-init cloud-config.yaml
 fi
 
 # lookup ip address of relativepath vm
 RELATIVEPATH_IP=$( multipass info relativepath | grep IPv4 | tr -s ' ' | cut -d ' ' -f 2 )
 
-# ssh to relative path vm
-ssh -i ./relativepath ubuntu@$RELATIVEPATH_IP
+# ssh to relativepath vm
+ssh -i ./id_ed25519 $(whoami)@$RELATIVEPATH_IP
