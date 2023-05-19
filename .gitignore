@@ -1,3 +1,3 @@
 # ignore relativepath ssh key files
-relativepath
-relativepath.pub
+
+id_ed25519*
