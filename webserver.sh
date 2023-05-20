@@ -53,7 +53,7 @@ else
   cat <<- _EOF_ > ./cloud-config.yaml
 	# cloud-config
 	users:
-	  - name: $(whoami)
+	  - name: $USER
 	    ssh-authorized-keys:
 	      - $(cat ./id_ed25519.pub)
 	_EOF_
@@ -72,4 +72,4 @@ fi
 RELATIVEPATH_IP=$( multipass info relativepath | grep IPv4 | tr -s ' ' | cut -d ' ' -f 2 )
 
 # ssh to relativepath vm
-ssh -i ./id_ed25519 $(whoami)@$RELATIVEPATH_IP
+ssh -i ./id_ed25519 $USER@$RELATIVEPATH_IP
