@@ -15,7 +15,6 @@ else
     else
       echo "brew not installed ... installing brew"
       NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    fi
     echo "installing multipass"
     brew install --cask multipass
   elif [ "$(uname)" = "Linux" ]
