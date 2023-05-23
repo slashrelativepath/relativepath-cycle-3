@@ -47,22 +47,20 @@ fi
 # checking for cloud-init.yaml
 if [ -f "./cloud-init.yaml" ]
 then
-  echo "cloud-init.yaml file already exists...deleting"
-  rm ./cloud-init.yaml
-fi
-
-# creating cloud-init.yaml
-echo "cloud-init.yaml file does not exist ... creating"
-cat <<- _EOF_ > ./cloud-init.yaml
+  echo "cloud-init.yaml file already exists"
+else
+  echo "creating cloud-init.yaml"
+cat <<- EOF > ./cloud-init.yaml
 # cloud-config
 users:
   - name: $USER
     ssh-authorized-keys:
       - $(cat ./id_ed25519.pub)
-_EOF_
+EOF
+fi
 
 # spinning up a ubuntu vm
-if ( multipass list | grep "relativepath" )
+if ( multipass info relativepath | grep State | grep Running )
 then 
   echo "relativepath vm is running"
 else 
