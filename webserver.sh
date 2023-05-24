@@ -2,12 +2,6 @@
 
 # This script checks if Multipass is installed on the user's machine, installs it if it's not already present, and sets up a virtual machine named 'relativepath'. It then generates an SSH key pair if not already present, creates a cloud-init configuration file for user setup, launches the VM using Multipass, and then logins into the VM using SSH.
 
-# Display an alert for MacOS users
-if [ "$(uname)" = "Darwin" ] 
-then
-  osascript -e 'display alert "MacOS users: run this command once before running the script webserver.sh: brew uninstall --cask multipass"'
-fi
-
 if ( multipass --version )
 then
   echo "multipass already installed on $(uname)"
@@ -21,7 +15,6 @@ else
     else
       echo "brew not installed ... installing brew"
       NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    fi
     echo "installing multipass"
     brew install --cask multipass
   elif [ "$(uname)" = "Linux" ]
