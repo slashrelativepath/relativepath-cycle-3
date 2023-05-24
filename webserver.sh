@@ -69,12 +69,18 @@ EOF
 fi
 
 # spinning up an ubuntu vm
-if ( multipass info relativepath | grep Running )
-then 
-  echo "relativepath vm is running"
-else 
-  echo "launching a ubuntu vm named relativepath"
-  multipass launch --name relativepath --cloud-init cloud-init.yaml
+if ( multipass info relativepath )
+then
+  if ( multipass info relativepath | grep Running )
+  then
+    echo “relativepath vm is running”
+  else
+    echo “starting relativepath vm”
+    multipass start relativepath
+  fi
+else
+  echo “launching an ubuntu vm named relativepath”
+  multipass launch --name relativepath  --cloud.init cloud-init.yaml
 fi
 
 # ssh into relativepath vm
