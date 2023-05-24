@@ -17,6 +17,7 @@ else
       NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     echo "installing multipass"
     brew install --cask multipass
+	  fi
   elif [ "$(uname)" = "Linux" ]
   then
     if ( snap --version )
