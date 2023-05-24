@@ -1,12 +1,18 @@
 #!/bin/bash
 
-#This script builds a vm and installs a webserver
+# This script checks if Multipass is installed on the user's machine, installs it if it's not already present, and sets up a virtual machine named 'relativepath'. It then generates an SSH key pair if not already present, creates a cloud-init configuration file for user setup, launches the VM using Multipass, and then logins into the VM using SSH.
 
-if ( multipass version )
+# Display an alert for MacOS users
+if [ "$(uname)" = "Darwin" ] 
+then
+  osascript -e 'display alert "MacOS users: run this command once before running the script webserver.sh: brew uninstall --cask multipass"'
+fi
+
+if ( multipass --version )
 then
   echo "multipass already installed on $(uname)"
 else
-  echo "checking for updates and installing multipass on $(uname)"
+  echo "installing multipass on $(uname)"
   if [ "$(uname)" = "Darwin" ]
   then
     if ( brew --version )
@@ -14,25 +20,25 @@ else
       echo "brew already installed"
     else
       echo "brew not installed ... installing brew"
-      sudo true; /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     fi
-    echo "using brew"
-    echo "doing a brew update"
-    brew update
-    echo "doing a brew upgrade"
-    brew upgrade
     echo "installing multipass"
-    brew install multipass
+    brew install --cask multipass
   elif [ "$(uname)" = "Linux" ]
   then
-    echo "installing snap"
-    sudo apt install snapd
-    echo "using snap"
-    sudo snap install multipass
+    if ( snap --version )
+    then
+      echo "snap already installed"
+    else
+      echo "installing snap"
+      sudo apt update
+      sudo apt install -y snapd
+    fi
+    echo "installing multipass on $(uname)"
+    sudo snap install multipass 
   fi
-
   # wait 15 seconds for multipass to initiate
-  sleep 15
+  sleep 10
 fi
 
 # checking for relativepath ssh keys
@@ -50,17 +56,20 @@ then
   echo "cloud-init.yaml file already exists"
 else
   echo "creating cloud-init.yaml"
-cat <<- EOF > ./cloud-init.yaml
+  cat <<- EOF > ./cloud-init.yaml
 # cloud-config
 users:
+  - default
   - name: $USER
-    ssh-authorized-keys:
-      - $(cat ./id_ed25519.pub)
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - $(cat id_ed25519.pub)
 EOF
 fi
 
-# spinning up a ubuntu vm
-if ( multipass info relativepath | grep State | grep Running )
+# spinning up an ubuntu vm
+if ( multipass info relativepath | grep Running )
 then 
   echo "relativepath vm is running"
 else 
@@ -68,8 +77,5 @@ else
   multipass launch --name relativepath --cloud-init cloud-init.yaml
 fi
 
-# lookup ip address of relativepath vm
-RELATIVEPATH_IP=$( multipass info relativepath | grep IPv4 | tr -s ' ' | cut -d ' ' -f 2 )
-
-# ssh to relativepath vm
-ssh -i ./id_ed25519 $USER@$RELATIVEPATH_IP
+# ssh into relativepath vm
+ssh -i ./id_ed25519 $USER@$(multipass info relativepath | grep IPv4 | awk '{ print $2 }')
