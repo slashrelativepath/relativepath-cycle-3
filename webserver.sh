@@ -31,7 +31,8 @@ else
     echo "installing multipass on $(uname)"
     sudo snap install multipass 
   fi
-  # wait 15 seconds for multipass to initiate
+  # wait 10 seconds for multipass to initiate
+  multipass set local.driver=qemu
   sleep 10
 fi
 
